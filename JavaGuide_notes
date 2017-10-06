@@ -1,0 +1,947 @@
+The keyword static allows main( ) to be called before an object of the class has been created
+
+A variable is a named memory location that can be assigned a value
+
+for(initialization; condition; iteration) statement;
+In its most common form, the initialization portion of the loop sets a loop control variable to an
+initial value. The condition is a Boolean expression that tests the loop control variable. If the
+outcome of that test is true, the for loop continues to iterate. If it is false, the loop terminates. The
+iteration expression determines how the loop control variable is changed each time the loop iterates
+public class ForDemo {
+    public static void main(String[] args) {
+        int count;
+        
+        
+        for(count = 0; count < 5; count = count + 1)
+            System.out.println("This is count: " + count);
+
+        System.out.println("DOne!");
+    }
+}
+
+At the start of each iteration (including the first one), the conditional test count < 5 is performed.
+If the outcome of this test is true, the println( ) statement is executed, and then the iteration portion of
+the loop is executed, which increases count by 1. 
+
+
+A character literal represents a single letter of
+type char. A string containing only one letter is still a string. Although strings consist of
+characters, they are not the same type.
+
+
+In general, you must give a variable a value prior to using it. One way to give a variable a value is
+through an assignment statement, as you have already seen. Another way is by giving it an initial value
+when it is declared. To do this, follow the variable’s name with an equal sign and the value being
+assigned. The general form of initialization is shown here:
+type var = value;
+
+
+public class DynInit {
+    public static void main(String[] args) {
+        double radius = 4, height = 5;
+
+        // dynamically initialize volume
+        double volume = 3.1416 * radius * radius * height;
+
+        System.out.println("Volume is " + volume);
+    }
+}
+Here, three local variables—radius, height, and volume—are declared. The first two, radius and
+height, are initialized by constants. However, volume is initialized dynamically to the volume of the
+cylinder. The key point here is that the initialization expression can use any element valid at the time
+of the initialization, including calls to methods, other variables, or literals.
+
+
+Some other computer languages define two general categories of scopes: global and local.
+Although supported by Java, these are not the best ways to categorize Java’s scopes. The most
+important scopes in Java are those defined by a class and those defined by a method
+The scope defined by a method begins with its opening curly brace. However, if that method has
+parameters, they too are included within the method’s scope.
+As a general rule, variables declared inside a scope are not visible (that is, accessible) to code
+that is defined outside that scope. Thus, when you declare a variable within a scope, you are
+localizing that variable and protecting it from unauthorized access and/or modification. Indeed, the
+scope rules provide the foundation for encapsulation.
+Scopes can be nested. For example, each time you create a block of code, you are creating a new,
+nested scope. When this occurs, the outer scope encloses the inner scope. This means that objects
+declared in the outer scope will be visible to code within the inner scope. However, the reverse is
+not true. Objects declared within the inner scope will not be visible outside it.
+Here is another important point to remember: variables are created when their scope is entered,
+and destroyed when their scope is left. This means that a variable will not hold its value once it has
+gone out of scope. Therefore, variables declared within a method will not hold their values between
+calls to that method. Also, a variable declared within a block will lose its value when the block is
+left. Thus, the lifetime of a variable is confined to its scope.
+If a variable declaration includes an initializer, that variable will be reinitialized each time the
+block in which it is declared is entered. 
+There is one quirk to Java’s scope rules that may surprise you: although blocks can be nested, no
+variable declared within an inner scope can have the same name as a variable declared by an
+enclosing scope. For example, the following program, which tries to declare two separate variables
+with the same name, will not compile
+public class NestVar {
+    public static void main(String[] args) throws InterruptedException {
+        int count;
+
+        for(count = 0; count < 10; count = count+1) {
+            System.out.println("This is count: " + count);
+
+            int count; // illegal!!!
+            for(count = 0; count < 2; count++)
+                System.out.println("This program is in error!");
+        }
+
+    }
+}
+
+ An operator is a symbol that tells the compiler to perform
+a specific mathematical or logical manipulation. Java has four general classes of operators:
+arithmetic, bitwise, relational, and logical
+Java supplies special short-circuit versions of its AND and OR logical operators that can be used to
+produce more efficient code. To understand why, consider the following. In an AND operation, if the
+first operand is false, the outcome is false no matter what value the second operand has. In an OR
+operation, if the first operand is true, the outcome of the operation is true no matter what the value of
+the second operand. Thus, in these two cases there is no need to evaluate the second operand. By not
+evaluating the second operand, time is saved and more efficient code is produced.
+
+
+When one type of data is assigned to another type of variable, an automatic type conversion will
+take place if
+-The two types are compatible.
+-The destination type is larger than the source type.
+When these two conditions are met, a widening conversion takes place. For example, the int type is
+always large enough to hold all valid byte values, and both int and byte are integer types, so an
+automatic conversion from byte to int can be applied.
+There are no automatic conversions from the numeric types to char or boolean. Also, char and
+boolean are not compatible with each other. However, an integer literal can be assigned to char.
+Although the automatic type conversions are helpful, they will not fulfill all programming needs
+because they apply only to widening conversions between compatible types. For all other cases you
+must employ a cast. A cast is an instruction to the compiler to convert one type into another. Thus, it
+requests an explicit type conversion. A cast has this general form:
+(target-type) expression
+When a cast involves a narrowing conversion, information might be lost. For example, when
+casting a long into a short, information will be lost if the long’s value is greater than the range of a
+short because its high-order bits are removed. When a floating-point value is cast to an integer type,
+the fractional component will also be lost due to truncation. For example, if the value 1.23 is assigned
+to an integer, the resulting value will simply be 1. The 0.23 is lost.
+
+
+Operators, variables, and literals are constituents of expressions. 
+Within an expression, it is possible to mix two or more different types of data as long as they are
+compatible with each other. For example, you can mix short and long within an expression because
+they are both numeric types. When different types of data are mixed within an expression, they are all
+converted to the same type. This is accomplished through the use of Java’s type promotion rules.
+First, all char, byte, and short values are promoted to int. Then, if one operand is a long, the
+whole expression is promoted to long. If one operand is a float operand, the entire expression is
+promoted to float. If any of the operands is double, the result is double.
+It is important to understand that type promotions apply only to the values operated upon when an
+expression is evaluated. For example, if the value of a byte variable is promoted to int inside an
+expression, outside the expression, the variable is still a byte. Type promotion only affects the
+evaluation of an expression.
+Type promotion can, however, lead to somewhat unexpected results. For example, when an
+arithmetic operation involves two byte values, the following sequence occurs: First, the byte
+operands are promoted to int. Then the operation takes place, yielding an int result. Thus, the
+outcome of an operation involving two byte values will be an int. This is not what you might
+intuitively expect.
+
+char ch1 = 'a', ch2 = 'b';
+ch1 = (char) (ch1 + ch2);
+ Without the cast, the result of adding ch1 to ch2 would be int, which can’t be assigned to a char.
+
+Operator Precedence
+++(postfix)	--(postfix)
+++(prefix)	--(prefix)	~	!	+(unary)	-(unary)	(type-cast)
+*		/		%
++		-
+>>		>>>		<<
+>		>=		<	<=	instanceof
+==		!=
+&
+^
+|
+&&
+||
+?:
+->
+=		op=
+
+
+
+
+Chapter 2 Self Test
+1. Why does Java strictly specify the range and behavior of its primitive types?
+security, to ensure portability across platforms
+2. What is Java’s character type, and how does it differ from the character type used by some other
+programming languages?
+Java's charcter type is char
+Java characters are unicode rather than ascii, which is used by some other computer languages
+3. A boolean value can have any value you like because any non-zero value is true. True or False?
+False. A boolean value must be either true or false
+4. Given this output,
+One
+Two 
+Three
+using a single string, show the println( ) statement that produced it.
+5. What is wrong with this fragment?
+for (i = 0; i < 10; i++){
+	int sum;
+	sum = sum + i;
+}
+System.out.println("Sum is: " + sum)
+sum variable is out of scope, available only inside inner block. Inside for-loop sum is not initialized
+There are to fundamental flaws in the fragment. First, sum is created each time the block defined by for loop is entered and destroyed on exit. 
+thus, it will not hold its value between iterations. Attempting to use sum to hold a running sum of the iterations is pointless.
+Second,
+sum will not be known outside of the block in which it is declared. Thus, the reference to it in
+the println( ) statement is invalid.
+6. Explain the difference between the prefix and postfix forms of the increment operator.
+postfix will first use the value of variable and then increment it, prefix first increments and then uses variable
+When the increment operator preceeds its operand, Java will perform the increment prior to obtaining the operand's value
+for use by the rest of the expression. 
+If the operator follows its operand, then Java will obtain the operand's value before incrementing.
+
+7. Show how a short-circuit AND can be used to prevent a divide-by-zero error.
+if we first check whether the value of variable is zero or not and then perform division by that variable 
+if (b !=0 && val/b)
+8. In an expression, what type are byte and short promoted to?
+int
+9. In general, when is a cast needed?
+in narrowing conversion. To convert one type to another
+A cast is needed when converting between incompatible types or when a narrowing conversion is occuring
+10. Write a program that finds all of the prime numbers between 2 and 100.
+11. Does the use of redundant parentheses affect program performance?
+No
+12. Does a block define a scope
+Yes
+
+
+chapter 3
+Program Control Statements
+There are three categories of program control statements: selection statements, which include the if and the
+switch; iteration statements, which include the for, while, and do-while loops; and jump statements,
+which include break, continue, and return. 
+To read a character from the keyboard, we will use System.in.read( ). System.in is the
+complement to System.out. It is the input object attached to the keyboard. The read( ) method waits
+until the user presses a key and then returns the result. The character is returned as an integer, so it
+must be cast into a char to assign it to a char variable. By default, console input is line bufered.
+Here, the term bufer refers to a small portion of memory that is used to hold the characters before
+they are read by your program. In this case, the buffer holds a complete line of text. As a result, you
+must press ENTER before any character that you type will be sent to your program. 
+The fact that System.in is line buffered is a source of annoyance at times. When you press ENTER, a
+carriage return, line feed sequence is entered into the input stream. Furthermore, these characters are
+left pending in the input buffer until you read them. Thus, for some applications, you may need to
+remove them (by reading them) before the next input operation. 
+
+the if statement
+if(condition) statement;
+else statement;
+where the targets of the if and else are single statements. The else clause is optional. The targets of
+both the if and else can be blocks of statements. The general form of the if, using blocks of statements,
+is
+if(condition)
+{
+	statement sequence
+}
+else
+{
+	statement sequence
+}
+If the conditional expression is true, the target of the if will be executed; otherwise, if it exists, the
+target of the else will be executed. At no time will both of them be executed. The conditional
+expression controlling the if must produce a boolean result.
+Nested ifs
+A nested if is an if statement that is target of another if or else. The main thing to remember about nested ifs in Java is that an else statement
+always refers to the nearest if statement that is within the same blosk as the else and not already associated with an else.
+
+if(i == 10) {
+	if(j < 20) a = b;
+	if(k > 100) c = d;
+	else a = c; // this else refers to if(k > 100)
+}
+else a = d // this else refers to if(i == 10)
+
+THe if-else-if Ladder
+A common programming construct that is based upon the nested if is the if-else-if ladder. It looks like this:
+
+if(condition)
+	statement;
+else if(condition)
+	statemen;
+else if(condition)
+	statement;
+.
+.
+.
+else
+	statement;
+
+The conditional expressions are evaluated from the top downward. As soon as a true condition is found, the statement associated with it is executed,
+and the rest of the ladder is bypassed. If none of the conditions are true, the final else statement will be executed. The final else often acts as a default
+condition; that is, if all other conditional tests fail, the else statement is performed. If there is no final else and all other conditions are false, no action
+will take place.
+
+The switch statement
+The switch provides for a multiway branch. Thus, it enables a program to select among several alternatives. Although a series of nested if statements can perform multiway tests,
+for many situation the switch is a more efficient approach. It works like this: the value of an expression is successively tested against a list of constants.
+When a match is found, the statement sequence associated with that match is executed. The general form of the switch statement is
+
+switch(expression){
+	case constant1:
+		statement sequence
+		break;
+	case constant2:
+		statement sequence
+		break;
+	case constant3:
+		statement sequence
+		break;
+	.
+	.
+	.
+	default:
+		statement sequence
+}
+For versions of Java prior to JDK 7, the expression controlling the switch must be of type byte, short, int, char, or an enumeration. Beginning with JDK 7, expression
+can also be of type String. This means that modern versions of Java can use a string to control a switch. Frequently, the expression controlling a switch is simply a variable
+rather than a larger expression.
+Each value specified in the case statements must be a unique constant expression (such as a literal value). Duplicate case values are not allowed. The type of each value must be compatible with the type of expression.
+The default statement sequence is executed if no case constant matches the expression. The default is optional; if it is not present, no action takes place if all matches fail.
+When a match is found, the statements associated with that case are executed until the break is encountered or, in the case of default or the last case, until the end of the switch is reached.
+Technically, the break statement is optional, although most applications of the switch will use it. When encounered within the statement sequence of a case, the break statement causes program flow to exit from the entire switch statement and resume at the next statement outside the switch. However, if a break statement does not end the statement sequence associated with a case, the all the statements at and following the matching case will be executed until a break (or the end of the switch) is encountered.
+You can have empty cases, as shown in this example:
+
+switch(i) {
+	case 1:
+	case 2:
+	case 3: System.out.println("i is 1, 2 or 3");
+	  break;
+	case 4: System.out.println("i is 4");
+          break;
+}
+In this fragment, if i has the value 1,2, or 3, the first println() statement executes. If it is 4. the second println() executes. The "stacking" of cases, as shown in this example, is common when several cases share common code.
+
+Under what conditions should I use an if-else-if ladder rather than a switch when coding a multiway branch?
+
+In general, use an if-else-if ladder when the conditions controlling the selection process do not rely upon a single value. For example, consider the following if-else-if sequence:
+
+if(x < 10) // ...
+else if(y != 0) // ...
+else if(!done) // ...
+
+This sequence cannot be recorded into a switch because all three conditions involve different variables - and differing types. What variable would control the switch? Also, you will 
+need to use an if-else-if ladder when testing floating-point values or other objects that are not of types valid for use in a switch expression.
+
+Nested switch statements
+It is possible to have a switch as part of the statement sequence of an outer switch. This is called a nested switch. Even if the case constants of the inner and outer switch contain common values, no conflicts will arise. For example, the following code fragment is perfectly acceptable:
+
+switch(ch1) {
+  case 'A': sout("This A is part of outer switch.");
+    switch(ch2) {
+        case 'A': 
+          sout("this A is part of inner switch."):
+          break;
+        case 'B': // . . .
+    } // end of inner switch
+    break;
+  case 'B': // . . .
+
+The for loop
+The general form of the for loop for repeating a single statement is:
+
+for(initialization; condition; iteration) statement;
+
+For repeating a block, the general form is
+
+for(initialization; condition; iteration)
+{
+statement sequence
+}
+
+
+The initialization is usually an assignment statement that sets the initial value of the loop control variable, which acts as the counter that controls the loop.
+The condition is a Boolean expression that determines whether or not the loop will repeat.
+The iteration expression defines the amount by which the loop control variable will change each time the loop repeated.
+The for loop will continue to execute as long as the condition tests true. 
+Once the condition becomes false, the loop will exit, and program execution will resume on the statement following the for.
+
+The for loop can proceed in a positive or negative fashion, and it can change the loop control variable by any amount. 
+For example, the following program prints the numbers 100 to -95, in decrements of 5:
+for(x=100; x > -100; x -= 5){
+            // Loop contorol variable is decremented by 5 each time 
+            System.out.println(x);
+        }
+
+An important point about for loops is that the conditional expression is always tested at the top of the loop. 
+This means that the code inside the loop may not be executed at all if the condition is false to begin with. Here is an example:
+
+for(count=10; coun2 < 5; count++)
+    x += count; // this statement will not execute 
+This loop will never execute because its control variable, count, is greater than 5 when the loop is
+first entered. This makes the conditional expression, count < 5, false from the outset; thus, not even
+one iteration of the loop will occur.
+
+Some Variations on the for Loop
+
+Multiple loop control variables can be used.
+public class Comma {
+    public static void main(String[] args) {
+        int i, j;
+
+        for(i=0, j=10; i < j; i++, j--){
+//            Notice the two loop control variables
+            System.out.println("i and j: " + i + " " + j);
+        }
+    }
+}
+i and j: 0 10
+i and j: 1 9
+i and j: 2 8
+i and j: 3 7
+i and j: 4 6
+Here commas separate two initialization statements and the two iteration expressions.
+When the loop begins, both i and j are initialized. Each time the loop repeats, i is incremented and j is decremented.
+Multiple loop control variables are often convinient and can simplify certain algorithms.
+You can have any number of initialization and iteration statements, but in practice, more than two or three make the for loop unwieldy.
+
+The condition controlling the loop can be any valid Boolean expression. It does not need to involve the loop control variable. 
+In the next example, the loop continues to execute until the user types the letter S at the keyboard:
+public class ForTest {
+    public static void main(String[] args) throws java.io.IOException{
+        int i;
+
+        System.out.println("Press S to stop");
+
+        for(i=0; (char) System.in.read() != 'S'; i++)
+            System.out.println("Pass #" + i);
+
+    }
+}
+
+
+Press S to stop
+t
+Pass #0
+Pass #1
+y
+Pass #2
+Pass #3
+t
+Pass #4
+Pass #5
+b
+Pass #6
+Pass #7
+S
+
+
+Missing Pieces
+
+Some interesting for loop variations are created by leaving pieces of the loop definition empty.
+In Java, it is possible for any or all of the initialization, condition, or iteration portions of the for loop to be blank.
+For example, consider the following program:
+public class Empty {
+    public static void main(String[] args) {
+        int i;
+
+        for(i =0; i < 10; ){
+//            The iteration expression is missing.
+            System.out.println("Pass # " + i);
+            i++; //increment loop control var
+        }
+    }
+}
+Here, the iteration expression of the for loop is empty.
+Instead, the loop control variable i is incremented inside the body of the loop.
+This means that each time the loop repeats, i is tested to see whether it equals 10, but no further action takes place.
+Of course, since i is still incremented within the body of the loop, the loop runs normally.
+
+In the next example, the initialization portion is also moved out of the for:
+public class Empty2 {
+    public static void main(String[] args) {
+        int i;
+        
+        i = 0; //move initialization out of loop
+        
+        for(; i<10; ){
+            System.out.println("Pass # " + i);
+            i++; //increment loop control var
+        }
+    }
+}
+
+In this version, i is initialized before the loop begins, rather than as part of the for.
+Normally, you will want to initialize the loop control variable inside the for.
+Placing the initialization outside of the loop is generally done only when the initial value is derived through a complex process that does not lend itself to containment inside the for loop.
+
+The infinite loop
+You can create an infinite loop (a loop that never terminates) using the for by leaving the conditional expression empty.
+
+for(;;) //intentionally infinite loop
+{
+   //...
+}
+This loop will run forever. Although there are some programming tasks, such as operating system
+command processors, that require an infinite loop, most “infinite loops” are really just loops with
+special termination requirements.
+
+Loops with no body
+In Java, the body associated with a for loop (or any other loop) can be empty.
+This is because a null statement is syntatically valid.
+Body-less loops are often useful.
+For example, the following program uses one to sum the numbers 1 through 5:
+
+public class Empty3 {
+    public static void main(String[] args) {
+        int i;
+        int sum = 0;
+
+        //sum the numbers through 5
+        for(i = 1; i <= 5; sum += i++);
+//        No body in this loop
+
+        System.out.println("Sum is " + sum);
+    }
+}
+
+sum += i++
+means "Add to sum the value of sum plus i, then increment i."
+Thus, it is the same as this sequence of statements:
+sum = sum + i;
+i++;
+
+Declaring Loop Control Variables Inside the for Loop
+Often the variable that controls a for loop is needed only for the purposes of the loop and is not used elswhere.
+When this is the case, it is possible to declare the variable inside the initialization portion of the for. 
+For example, the following program computes both the summation and the factorial of the numbers 1 through 5. 
+It declares its loop contorol variable i inside the for.
+
+public class ForVar {
+    public static void main(String[] args) {
+        int sum = 0;
+        int fact = 1;
+
+//        compute the factorial of the numbers through 5
+        for(int i = 1; i <= 5; i++){
+//            the variable i is declared inside the for statement
+            sum += i;
+            fact *= i;
+        }
+//        but, i is not known here
+
+        System.out.println("Sum is " + sum);
+        System.out.println("Factorial is " + fact);
+    }
+}
+
+When you declare a variable inside a for loop, there is one important point to remember: the scope
+of that variable ends when the for statement does. (That is, the scope of the variable is limited to the
+for loop.) Outside the for loop, the variable will cease to exist. Thus, in the preceding example, i is
+not accessible outside the for loop. If you need to use the loop control variable elsewhere in your
+program, you will not be able to declare it inside the for loop.
+
+The enhanced for loop
+Relatively recently, a new form of the for loop, called the enhanced for, was added to Java.
+The enhanced for provides a streamlined way to cycle through the contents of a collection of objects, such as an array.
+
+The While Loop
+Another of Java's loops is the while. The general form of the while loop is
+
+while(condition) statement;
+
+where statement may be a single statement or a block of statements, and condition defines the condition that controls the loop.
+The condition may be any valid Boolean expression. The loop repeats while the condition is true. 
+When the condition becomes false, program control passes to the line immediately following the loop.
+
+Here is a simple example in which a while is used to print the alphabet:
+public class WhileDemo {
+    public static void main(String[] args) {
+        char ch;
+
+//        print the alphabet using a while loop
+        ch = 'a';
+        while(ch <= 'z') {
+            System.out.println(ch);
+            ch++;
+        }
+
+    }
+}
+
+Here, ch is initialized to the letter a. Each time through the loop, ch is output and then incremented.
+This process continues until ch is greater than z.
+
+As with the for loop, the while check the conditional expression at the top of the loop, which means that the loop code may not execute at all.
+This eliminates the need for performing a separate test before the loop.
+The following program illustrates this characteristic of the while loop.
+It computes the integer powers of 2, from 0 to 9.
+public class Power {
+    public static void main(String[] args) {
+        int e;
+        int result;
+        for(int i=0; i < 10; i++){
+            result = 1;
+            e = i;
+            while(e > 0){
+                result *= 2;
+                e--;
+            }
+
+            System.out.println("2 to the " + i + " power is " + result);
+        }
+    }
+}
+Notice that the while loop executes only when e is greater than 0.
+Thus, when e is zero, as it is in the first iteration of the for loop, the while loop is skipped.
+
+Given the flexibility inherent in all of Java's loops, what criteria should I use when selecting a loop?
+That is, how do I choose the right loop for a specific job?
+Use a for loop when performing a known number of iterations.
+Use do-while when you need a loop that will always perform at least one iteration.
+The while is best used when the loop will repeat an unknown number of times.
+
+The do-while Loop
+Unlike the for and the while loops, in which the condition is tested at the top of the loop, the do-while loop checks its condition at the bottom of the loop.
+This means that a do-while loop will always execute at least once.
+The general form of the do-while loop is
+
+do{
+   statements;
+}  while(condition);
+
+The do-while loop executes as long as the conditional expression is true.
+
+The following program loops until the user enters the letter q;
+public class DWDemo {
+    public static void main(String[] args) throws java.io.IOException{
+
+        char ch;
+        do{
+            System.out.println("Press a key followed by enter");
+            ch = (char) System.in.read(); //get a char
+        } while(ch != 'q');
+
+    }
+}
+Press a key followed by enter
+f
+Press a key followed by enter
+Press a key followed by enter
+u
+Press a key followed by enter
+Press a key followed by enter
+q
+
+
+public class Guess4 {
+    public static void main(String[] args) throws java.io.IOException {
+
+        char ch, ignore, answer = 'K';
+
+        do {
+            System.out.println("I'm thinking of a letter between A and Z");
+            System.out.println("Can you guess it: ");
+
+//            read a character
+            ch = (char) System.in.read();
+
+//            discard any other characters in the input buffer
+
+            do {
+                ignore = (char) System.in.read();
+            } while(ignore != '\n');
+
+            if(ch == answer) System.out.println("**Right**");
+            else{
+                System.out.print("..Sorry, you're ");
+                if(ch < answer) System.out.println("too low");
+                else System.out.println("too high");
+                System.out.println("Try again!\n");
+            }
+        } while(answer != ch);
+
+    }
+}
+
+----------------------------------------------------------------
+//            discard any other characters in the input buffer
+
+            do {
+                ignore = (char) System.in.read();
+            } while(ignore != '\n');
+
+As explained earlier, console input is line bufferd - you have to press ENTER before characters are sent.
+Pressing ENTER causes a carriage return and a line feed (newline) sequence to be generated.
+These characters are left pending in the input buffer.
+ALso, if you typed more than one key before pressing ENTER, they would still be in the input buffer.
+This loop discards those characters by continuing to read input until the end of the line is reached.
+If they were not discarded, then those characters would also be sent to the program as guesses, which is not what is wanted.
+
+
+Use break to exit a Loop
+It is possible to force an immediate exit from a loop, bypassing any remaining code in the body of the loop and the loop's conditional test, by using the break statement.
+When a break statement is encountered inside a loop, the loop is terminated and program control resumes at the next statement following the loop.
+Here is a simple example
+
+public class BreakDemo {
+    public static void main(String[] args) {
+        int num;
+
+        num = 100;
+
+//        loop while i-squared is less than num;
+        for(int i=0; i < num; i++){
+            if(i*i >= num) break; //terminate loop if i*i >= 100
+            System.out.print(i + " ");
+        }
+        System.out.println("Loop complete.");
+    }
+}
+
+Although the for loop is designed to run from 0 to num (which in this case is 100), the break statement causes it to terminate early, when i squared is greater than or equal to num.
+
+The break statement can be used with any of Java's loops, including intemtionally infinite loops. 
+For example, the following program simply reads input until the user types the letter q:
+public class Break2 {
+    public static void main(String[] args) throws java.io.IOException{
+        char ch;
+
+        for(;;){
+            ch = (char) System.in.read();
+            if (ch=='q') break;
+
+        }
+        System.out.println("YOu pressed q!");
+
+    }
+
+}
+
+When used inside a set of nested loops, the break statement will break out only the innermost loop:
+public class Break3 {
+    public static void main(String[] args) {
+
+        for(int i=0; i<3; i++){
+            System.out.println("Outer loop count: " + i);
+            System.out.print("  Inner loop count:");
+
+            int t = 0;
+            while(t < 100){
+                if(t == 10) break; //terminate loop if t is 10
+                System.out.print(t + " ");
+                t++;
+            }
+            System.out.println();
+        }
+        System.out.println("loops complete.");
+    }
+}
+
+Here are two other points to remember about break.
+First, more than one break statement nay appear in a loop. However, be careful. Too many break statements have the tendency to destructure your code.
+Second, the break that terminates a switch statement affects only that switch statement and not any enclosing loops.
+
+USe break as form of goto
+In addition to its uses with the switch statement and loops, the break statement can be employed by itself to provide a "civilized" form of the goto statement.
+Java does not have a goto statement, because it provides an unstructured way to alter the flow of program execution.
+Programs that make extensive use of the goto are usually hard to understand and hard to maintain.
+There are, hoewever, a few places where goto is a useful and legitmate device.
+For example, the goto can be helpful when exiting from a deeply nested set of loops.
+To handle such situations, Java defines an expanded form of the break statement.
+By using this form of break, you can, for example, break out of one or more blocks of code.
+These blocks need not be part of a loop or a switch.
+They can be any block. Further, you can specify precisely where execution will resume, because this form of break works with label.
+As you will see, break gives you the benefits of a goto without its problems.
+The general form of the labeled break statement is shown here:
+
+break label;
+
+Typicallt, label is the name of a label that identifies a block of code.
+When this form of break executes, control is transferred out of the named block of code.
+The labeled block of code must enclose the break statement, but it does not need to be the immediately enclosing block.
+This means that you can use a labeled break statement to exit from a set of nested blocks.
+But you cannot use break to transfer control to a block of code that does not enclose the break statement.
+
+To name a block, put a label at the start of it.
+The block being labeled can be a stand-alone block, or a statement that has a block as its target. A label is any valid Java identifier followed by a colon
+Once you have labeled a block, you can then use this label as the target of a break statement. 
+Doing so causes execution to resume at the end of the labeled block. 
+For example, the following program shows three nested blocks:
+
+public class Break4 {
+    public static void main(String[] args) {
+        int i;
+
+        for(i=1; i<4; i++) {
+            one:{
+                two:{
+                    three:{
+                        System.out.println("\ni is " + i);
+                        if(i==1) break one; //break the label
+                        if(i==2) break two;
+                        if(i==3) break three;
+
+                        //this is never reached
+                        System.out.println("won't print");
+                    }
+                    System.out.println("After block three");
+                }
+                System.out.println("After block two");
+            }
+            System.out.println("After block one.");
+        }
+        System.out.println("After for");
+    }
+}
+
+When i is 1, the first if statement succeeds, causing a break to the end of the block of code defined by label one.
+This causes "After block one" to print.
+When i is 2m the second if succeeds, causing control to be transferred to the end of the block labeled by two.
+This causes the messages "After block two" and "And after block one" to be printed, in that order.
+When i is 3, the third if succeeds, and control is transferred to the end of the block labeled by three. Now, all three messages are displayed.
+
+Here is another example. This time, break is being used to jump outside of a series of nested for
+loops. When the break statement in the inner loop is executed, program control jumps to the end of
+the block defined by the outer for loop, which is labeled by done. This causes the remainder of all
+three loops to be bypassed.
+public class Break5 {
+    public static void main(String[] args) {
+
+        done:
+        for(int i=0; i<10; i++){
+            for(int j=0; j<10; j++){
+                for(int k=0; k<10; k++){
+                    System.out.println(k + " ");
+                    if(k==5) break done;
+                }
+                System.out.println("After k loop"); //won't execute
+            }
+            System.out.println("After j loop"); //won't execute
+        }
+        System.out.println("After i loop");
+    }
+}
+Precisely where you put a label is very important—especially when working with loops. For
+example, consider the following program:
+public class Break6 {
+    public static void main(String[] args) {
+        int x=0, y=0;
+
+//        here put label before for statement.
+
+        stop1: for(x=0; x < 5; x++){
+            for(y=0; y < 5; y++){
+                if(y == 2) break stop1;
+                System.out.println("x and y: " + x +" " + y);
+            }
+        }
+        System.out.println();
+//        x and y 0 0
+//        x and y 0 1
+
+
+
+//        now, put label immeadiately before {
+        for(x=0; x < 5; x++)
+            stop2: {
+            for(y=0; y < 5; y++){
+                if(y == 2) break stop2;
+                System.out.println("x and y: " + x + " " + y);
+            }
+            }
+
+//        x and y 0 0
+//        x and y 0 1
+
+
+//        x and y 1 0
+//        x and y 1 1
+
+//        ...
+    }
+}
+In the program, both sets of nested loops are the same except for one point. In the first set, the label
+precedes the outer for loop. In this case, when the break executes, it transfers control to the end of
+the entire for block, skipping the rest of the outer loop’s iterations. In the second set, the label
+precedes the outer for’s opening curly brace. Thus, when break stop2 executes, control is transferred
+to the end of the outer for’s block, causing the next iteration to occur.
+
+ Keep in mind that you cannot break to any label that is not defined for an enclosing block. For
+example, the following program is invalid and will not compile:
+public class BreakErr {
+    public static void main(String[] args) {
+        
+        one: for(int i=0; i<3; i++){
+            System.out.println("Pass " + i + ": ");
+        }
+        
+        for(int j=0; j<100; j++){
+            if(j == 10) break one; //Wrong
+            System.out.print(j + " ");
+        }
+    }
+}
+
+YOu say that goto is unstructured and that the break with a label offers a better alternative. But really, doesn't breaking to a label, which might be many lines of code
+and levels of nesting removed from the break, also destructure code?
+
+Yes. However, in those cases in which a jarring change in program flow is required, breaking to a label still retains some structure. A goto has none.
+
+Use continue
+It is possible to force an early iteration of a loop, bypassing the loop's normal control structure.
+This accomplished by using continue.
+The continue statement forces the next iteration of the loop to take place, skipping any code between itself and the conditional expression that controls the loop.
+Thus, continue is essentially the complement of break.
+For example, the following program uses continue to help print the even numbers between 0 and 100:
+
+public class ContDemo {
+    public static void main(String[] args) {
+        for(int i=0; i <= 100; i++){
+            if (i%2 != 0) continue;  //iterate
+            System.out.println(i); 
+        }
+
+    }
+}
+Only even numbers are printed, because an odd one will cause the loop to iterate early, bypassing the
+call to println( ).
+
+I n while and do-while loops, a continue statement will cause control to go directly to the
+conditional expression and then continue the looping process. In the case of the for, the iteration
+expression of the loop is evaluated, then the conditional expression is executed, and then the loop
+continues.
+
+As with the break statement, continue may specify a label to describe which enclosing loop to continue.
+Here is an example program that uses continue with a label:
+public class ContToLabel {
+    public static void main(String[] args) {
+
+        outerloop:
+        for (int i=1; i < 10; i++) {
+            System.out.print("\nOuter loop pass " + i +
+                            ", Inner loop: ");
+
+            for(int j =1 ; j < 10; j++){
+                if(j == 5) continue outerloop; //continue outerloop
+                System.out.print(j);
+            }
+        }
+    }
+}
+As the output shows, when the continue executes, control passes to the outer loop, skipping the
+remainder of the inner loop.
+
+Nested loops
+One loop can be nested inside of another.
+The following program uses a nested for loop to find the factors of the numbers from 2 to 100
+public class FindFac {
+    public static void main(String[] args) {
+        for(int i=2; i<=100; i++){
+            System.out.print("Factors of " + i + ": ");
+            for(int j=2; j < i; j++){
+                if (i%j == 0) System.out.print(j + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+In the program, the outer loop runs i from 2 through 100. The inner loop successively tests all
+numbers from 2 up to i, printing those that evenly divide i. Extra challenge: The preceding program
+can be made more efficient. Can you see how? (Hint: The number of iterations in the inner loop can
+be reduced.)
