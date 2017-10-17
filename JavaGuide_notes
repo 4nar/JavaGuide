@@ -1010,7 +1010,7 @@ after while; break statement terminates the while loop inside for loop
 6 7 
 8 9
 11. infinite loop for(;;) has no condition to stop. never stops
-Ans: An infinite loop is a loop that runs indefinitely.
+Ans: An infinite loop is a loop that runs 
 12. When using break with a label, must the label be on a block that contains break.
 Yes, break must be enclosed by labeled block
 
