@@ -1,0 +1,315 @@
+CHAPTER 1 Java Fundamentals 
+Java Applets
+An applet is a special kind of Java program that is designed to be transmitted over the Internet
+and automatically executed by a Java-compatible web browser.
+Furthermore, an applet is downloaded on demand, without further interaction with the user.
+If the user clicks a link that contains an applet, the applet will be automatially downloaded and run in the browser.
+Applets are intended to be small programs.
+They are typically used to display data provided by the server, handle user input, or provide simple functions, such as a loan calculator, that execute locally, rather than on server.
+In essence, the applet allows some funecionality to be moved from the server to the client.
+The applet is a dynamic, self-executing program.
+
+Security
+In order for Java to enable applets to be safely downloaded and executed on the client computer,
+it was necessary to prevent an applet form launching harmful code.
+Java achieved this protection by confining an applet to the Java execution environment 
+and not allowing it access to other parts of the computer.
+
+Portability
+Portability is a major aspect of the Internet bcs there are many different types of computers
+and operating systems connected to it. 
+If a Java program were to be run on any computer connected to the Internet, there needed to be some way
+to enable that program to execute on different systems.
+The same code must work in all computers.
+The same mechanism that helps ensure security also helps create portability.
+
+________________________________________________________________________________________________________________________________________________________________ 
+(Bytecode is computer object code that is processed by a program, usually referred to as a virtual machine, 
+rather than by "real" computer machine, the hardware processor. The virtual machine converts each generalized machine instruction into a specific
+machine instruction or instructions that is computer's processor will understand.
+Bytecode is the result of compiling source code written in a language that supports this approach.
+Most computer languages, such as C and C++, require a separate compiler for each computer platform - that is, 
+for each computer operating system and the hardware set of instructions that it is built on.
+Windows and the Intel line of microprocessor architectures are one platform; Apple and PowerPC processors are another.
+Using a language that comes with a virtual machine for each platform, your source language statements need to be compiled only once and will then run on any platform.
+Rather than being interpreted one instruction at a time, Java bytecode can be recompiled at each particular system platform by a just-in-time compiler.
+Usually, this will enable the java program to run faster. In jave, bytecode is contained in a binary file with a .class suffix)
+
+JIT
+(In the Java programming language and environment, a just-in-time(JIT) compiler is a program that turns Java bytecode(a program that contains instructions that must be interpreted) into instructions that can be sent directly to the processor. After you've written a Java program, the source language statements are compiled by the Java compiler into bytecode rather than into code that contains 
+instructions that match a particular hardware platform's processor. The bytecode is platform-independent code that can be sent to any platform and run on that platform)
+
+Java compiler
+A Java compiler is a program that takes the text file work of a developer and compiles it into a platform-independent Java file. 
+Java compilers include the Java Programming Language Compiler (javac), the GNU Compiler for Java (GCJ),
+the Eclipse Compiler for Java(ECJ) and Jikes.
+Programmers typically write language statements in a given programming language one line at a time using a code editor or an integrated development environment(IDE).
+The resulting file contains what are called the source statements.
+The programmer than runs a compiler for the appropriate language, specifying the name of the file that contains the source statements
+At run time, the compiler first parses (analyzes) all of the language statements syntatically and then, in one or more successife stages or "passess', 
+builds the output code, making sure that statements thet refer to other statements are referrred to correctly in the final code.
+
+Generally, Java compilers are run and pointed to a programmer's code in a text file to produce a class file for use by the Java virtual machine on different platforms.
+A JIT Java compiler comes along with the JVM. Its use is optional, and it is run on the platform-independent code. 
+The JIT compiler translates the code into the machine code for different harware so that it is optimized for different architectures.
+Once the code has been (re-)compiled by the JIT compiler, it will usually run more quickly than the java code that can only be executed one instruction at a time.  
+______________________________________________________________________________________________________________________________________________________________________
+THe Bytecode
+The key that allows Java to solve both security and portability problems is that the output of a Java compiler is not executable code.
+It is bytecode.
+Bytecode is a highly optimized set of instructions designed to be executed by the Java run-time system,
+which is called Java Virtual MAchine.
+In essence, the original JVM was designed as an interpreter for bytecode.
+Translating a Java program into bytecode makes it much easier to run a program in a wide variety
+of environments because only the JVM needs to be implemented for each platform. Once the run-time
+package exists for a given system, any Java program can run on it. Remember, although the details of
+the JVM will differ from platform to platform, all understand the same Java bytecode. If a Java
+program were compiled to native code, then different versions of the same program would have to
+exist for each type of CPU connected to the Internet. This is, of course, not a feasible solution. Thus,
+the execution of bytecode by the JVM is the easiest way to create truly portable programs.
+The fact that a Java program is executed by the JVM also helps to make it secure. Because the JVM
+is in control, it can contain the program and prevent it from generating side effects outside of the
+system. Safety is also enhanced by certain restrictions that exist in the Java language.
+When a program is interpreted, it generally runs slower than the same program would run if
+compiled to executable code. However, with Java, the differential between the two is not so great.
+Because bytecode has been highly optimized, the use of bytecode enables the JVM to execute
+programs much faster than you might expect.
+Although Java was designed as an interpreted language, there is nothing about Java that prevents
+on-the-fly compilation of bytecode into native code in order to boost performance. For this reason,
+the HotSpot technology was introduced not long after Java’s initial release. HotSpot provides a just-in-time
+(JIT) compiler for bytecode. When a JIT compiler is part of the JVM, selected portions of
+bytecode are compiled into executable code in real time on a piece-by-piece, demand basis. It is
+important to understand that it is not practical to compile an entire Java program into executable code
+all at once because Java performs various run-time checks that can be done only at run time. Instead,
+a JIT compiler compiles code as it is needed, during execution. Furthermore, not all sequences of
+bytecode are compiled—only those that will benefit from compilation. The remaining code is simply
+interpreted. However, the just-in-time approach still yields a significant performance boost. Even
+when dynamic compilation is applied to bytecode, the portability and safety features still apply
+because the JVM is still in charge of the execution environment.
+
+A servlet is a small program that executes on a server. Just as applets dynamically extend the
+functionality of a web browser, servlets dynamically extend the functionality of a web server. It
+is helpful to understand that as useful as applets can be, they are just one half of the client/server
+equation. Not long after the initial release of Java, it became obvious that Java would also be
+useful on the server side. The result was the servlet. Thus, with the advent of the servlet, Java
+spanned both sides of the client/server connection. Although the creation of servlets is beyond
+the scope of this beginner’s guide, they are something that you will want to study further as you
+advance in Java programming
+
+Java buzzwords
+Simple - Java has a concise, cohesive set of features that makes it easy to learn and use.
+Secure - Java provides a secure means of creating Internet applications.
+Portable - Java programs can execute in any environment for which there is a Java run-time system. (JVM)
+Object-Oriented - Java embodies the modern, object-oriented programming philosophy.
+Robust - Java encourages error-free programming by being strictly typed and performing run-time checks.
+Multithreaded - Java provides integrated support for multithreaded programming.
+Architecture-neutral - Java is not tied to a specific machine or operating system architecture.
+Interpreted - Java supports cross-platform code through the use of Java bytecode.
+High performance - The Java bytecode is highly optimized for speed of execution.
+Distributed - Java was designed with the distributed environment of the Internet in mind.
+Dynamic - Java programs carry with them substantial amounts of run-time type information that is used to verify and resolve accesses to objects at run time.
+
+To address the issues of portability and security, why was it necessary to create a new computer language such as Java;
+couldn't a C++ be adepted? In other words, couldn't a C++ compiler that outputs bytecode be created?
+
+While it would be possible for C++ compiler to generate something similar to bytecode rather than executable code, 
+C++ has features the discourage its use for the creation of Internet programs - the most important feature being C++'s support for pointers.
+A pointer is the address of some object stored in memory.
+Using a pointer, it would be possible to access resources outside the program itself, resulting in a security breach.
+Java does not support pointers, thus eliminating this problem.
+________________________________________________________________________________________________________________________________________________________________________________________________
+One (that's been mentioned a lot) is that a compiled Java program can (or least should) run on any conforming implementation of Java, so even after being compiled, you can still move a Java program from one platform to another without re-compiling. C++ (at least normally) requires re-compilation for each target platform.
+__________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Object-Oriented programming
+In the most general sense, a program can be organized in one of two ways: around its code (what is happening) or around its data (what is being affected).
+Using only structured programming (C, Pascal) techniques, programs are typically organized around code.
+This approach can be thought of as "code acting on data."
+Object-oriented programs work the other way around.
+They are organized around data, with the key principle being "data controlling access to code."
+In an object-oriented language, you define the data and the routines that are permitted to act on that data.
+Thus, a data type defines prcisely what sort of operations can be applied to taht data.
+To support the principles of object-oriented programming, all OOP languages, including Java, have three traits in common: encapsulation, polymorphism, and inheritance.
+
+Encapsulation
+Encapsulation is a programming mechanism that binds together code and the data it manipulates, and that keeps both safe from outside interference and misuse.
+In an object-oriented language, code and data can be bound together in such a way that a self-contained black box is created.
+Within the box are all necessary data and code.
+When code and data are linked together in this fashion,a n object is created.
+In other words, an object is the device of encapsulation.
+Within an object, code, data, or both may be private to that object or public.
+Private code or data is known to and accessible by only another part of the object.
+That is, private code or data cannot be accessed by a piece of the program that exists outside the object.
+When code or data is pucblic, other parts of your program can access it even though it is defined within an object.
+TYpically, the puclic parts of an object are used to provide a controlled interface to the private elements of the object.
+Java's basic unit of encapsulation is the class.
+A class defines the form of an object.
+It specifies both the data and the code that will operate on that data.
+Java uses a class specification to construct objects.
+Objects are instances of a class.
+Thus, a class is essentially a set of plans that specify how to build an object.
+The code and data that constitutes a class are called members of the class.
+Specifically, the data defined by the class are referred to as member variables or instance variables.
+The code that operates on that data is referred to as member methods or just methods.
+Method is Java's term for a subroutine.
+What a java programmer calls a method, a C/C++ programmer calls a function.
+
+Polymorphism
+Polymorphism is the quality that allows one interface to access a general class of actions.
+The specific action is determined by the exact nature of the situation.
+A simple example of polymorphism is found in the steering wheel of an automobile.
+The steering wheel (i.e interface) is the same no matter what type of actual steering mechanism is used.
+That is, the steering wheel works the same whether your car has manual steering, power steering, or rack-and-pinion steering.
+Therefore, once you know how to operate the steering wheel, you can drive any type of car.
+The same principle can also apply to programming.
+For example, consider a stack(which is a first-in, last out list). 
+You might have a program that requires three different types of stacks.
+One stack is used for integer values, one for floatin-point values, and one for charcters.
+In this case, the algorithm that implements each stack is the same, even though the data being stored differs.
+In a non-object-oriented language, you would be required to create three different sets of stack routines, with each set using different names.
+However, because of polymorphism, in Java you can create one general set of stack routines that works for all three specific situations.
+This way, once you know how to use one stack, you can use the all.
+More generall, the concept of polymorphism is often expessed by the phrase "one interface, multiple methods."
+This means that it is possible to design a generic interface to a group of related activities.
+Polymorphism helps reduce complexity by allowing the same interface to be used to specify a general class of action.
+It is the compiler's job to select the specific action (method) as it applies to each situation.
+You, the programmer, don't need to do this selection manually.
+You need only remember and utilize the general interface.
+
+Inheritance
+Inheritance is the process by which one object can acquire the properties of another object.
+For example, a Red Delicious apple is part of the classification apple, which in turm is part of the fruit class, which is under larger class food.
+That is, the food class possesses ceratain qualities (edible, nutritious, etc.) which also, logically, apply to its subclass, fruit.
+In addition to these qualities, the frui class has specific charcteristics (juicy, sweet, etc.) that distinguish it from other food.
+The apple class defines those qualities specific to an apple (grows on trees, not tropical, etc.) 
+A Red Delicious apple would, in turn, inherit all the qualities of all prceding classes, and would define only those qualities that make it unique.
+Without the use of hierarchies, each object would have to explicitly define all of its characteristics.
+Using inheritance, an object need only define those qualities that make it unique within the class.
+It can inherit its general attributes from its parents.
+Thus, it is the inheritance mechanism that makes it possible for one object to be a specific instance of a more general case.
+
+JDK
+The JDK supplies two primary programs.
+The first is javac, which is the Java compiler.
+The second is java, which is the standard Java inrterpreter and is also referred to as the application launcher.
+
+A first simple program
+
+class Example {
+    // A Java program begins with a call to main()
+    public static void main(String args[]) {
+        System.out.println("Hello world");
+    }
+}
+1. Enter the program
+2. Compile the program javac Example.java
+3. Run the program java Example
+
+When java source code is compiled, each individual class is put into its own output file named after the class and using .class extension.
+This is why it is a good idea to give your Java source files the same name as the class they contain - the name of the source file will match the name of the .class file.
+When you execute the Java interpreter as just shown, you are actually specifying the name that has the .class extension.
+If it finds the file, it will execute the code contained in the specified class.
+
+
+The keyword static allows main( ) to be called before an object of the class has been created.
+This is necessary because main() is called before an object of the class has been created
+As stated, main( ) is the method called when a Java application begins. Any information that youneed to pass to a method is received by variables specified within the set of parentheses that follow
+the name of the method. These variables are called parameters. If no parameters are required for a
+given method, you still need to include the empty parentheses. In main( ) there is only one parameter,
+String args[ ], which declares a parameter named args. This is an array of objects of type String.
+(Arrays are collections of similar objects.) Objects of type String store sequences of characters. In
+this case, args receives any command-line arguments present when the program is executed. This
+program does not make use of this information, but other programs shown later in this book will.
+While too complicated to explain in detail at this time, briefly, System
+is a predefined class that provides access to the system, and out is the output stream that is connected
+to the console. Thus, System.out is an object that encapsulates console output. The fact that Java uses
+an object to define console output is further evidence of its object-oriented nature.
+
+Furthermore, although the Java compiler will compile classes that do not contain a
+main( ) method, it has no way to execute them. So, if you had mistyped main, the compiler would still
+compile your program. However, the Java interpreter would report an error because it would be
+unable to find the main( ) method.
+
+A variable is a named memory location that can be assigned a value
+To declare a variable you will use a statement like this
+
+type var-name; 
+
+int var1;
+
+the following line of code assigns var1 the value 1024
+
+var1 = 1024; //this assigns 1024 to var1
+In Java, the assignment operator is the single equal sign. It copies the value on its right side into the variable on its left. 
+
+for(initialization; condition; iteration) statement;
+In its most common form, the initialization portion of the loop sets a loop control variable to an
+initial value. The condition is a Boolean expression that tests the loop control variable. If the
+outcome of that test is true, the for loop continues to iterate. If it is false, the loop terminates. The
+iteration expression determines how the loop control variable is changed each time the loop iterates
+public class ForDemo {
+    public static void main(String[] args) {
+        int count;
+        
+        
+        for(count = 0; count < 5; count = count + 1)
+            System.out.println("This is count: " + count);
+
+        System.out.println("DOne!");
+    }
+}
+
+At the start of each iteration (including the first one), the conditional test count < 5 is performed.
+If the outcome of this test is true, the println( ) statement is executed, and then the iteration portion of
+the loop is executed, which increases count by 1. 
+
+Identifiers in java
+In java an identifier is a name given to a method, a variable, or any other user-defined item.
+Identifiers can be from one to several characters long. Variable names may start with any letter of the
+alphabet, an underscore, or a dollar sign. Next may be either a letter, a digit, a dollar sign, or an
+underscore. The underscore can be used to enhance the readability of a variable name, as in
+line_count. Uppercase and lowercase are different; that is, to Java, myvar and MyVar are separate
+names.
+
+The java class libraries
+The sample programs in this chapter make use of two of Java's built-in methods: println() and print().
+These methods are accessed through System.out.
+System is a class predefined by Java that is automatically included in your programs.
+In the larger view, the Java environment relies on several built-in class libraries that contain many built-in methods that provide support for such things as I/O, string handling, networking, and graphics.
+Thus, Java as a totality is a combination of the Java language itself, plus its standard classes.
+
+Chapter 1 Self test
+1. What is bytecode and why is it important to Java’s use for Internet programming?
+Bytecode is the object code (highly optimized instructions) produced by java compiler that can be run on differen platforms.
+Bytecode is interpreted line by line by JVM.
+Bytecode provides portability and security
+__________________________________________________________________________________________
+Bytecode is a highly optimized set of instructions that is executed by th JVM.
+Bytrcode helps java achieve both portability and security
+2. What are the three main principles of object-oriented programming?
+	Encapsulation data and code that manipulates data are binded 
+	Polymorphism one interface to access a general class of actions
+	Inheritance one class can acquire properties of another
+3. Where do Java programs begin execution?
+	from main() method
+4. What is a variable
+	named memory location that can be assigned a value
+	The content of a variable can be changed during the execution of a program.
+5. Which of the following variable names is invalid?
+	D. 67count
+6. How do you create a single-line comment? How do you create a multiline comment?
+	//
+	/*
+        
+	*/
+7. Show the general form of the if statement. Show the general form of the for loop.
+	if(condition) statement;
+	for(initialization; condition; iteration) statement;
+8. How do you create a block of code?
+	{
+		...
+	}
+11. If you make a typing mistake when entering your program, what sort of error will result?
+	syntax error
+12. Does it matter where on a line you put a statement?
+	No
