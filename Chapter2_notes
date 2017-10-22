@@ -666,6 +666,10 @@ The key point here is that the initialization expression can use any element val
 including calls to methods, other variables, or literals.
 
 The Scope and Lifetime of Variables 
+A block defines a scope.
+Thus, each time you start a new block, you are creating a new scope.
+A scope determines what objects are visible to other parts of your program.
+It also determines the lifetime of those objects. 
 Some other computer languages define two general categories of scopes: global and local.
 Although supported by Java, these are not the best ways to categorize Java’s scopes.
 The most important scopes in Java are those defined by a class and those defined by a method.
@@ -676,22 +680,41 @@ to code that is defined outside that scope.
 Thus, when you declare a variable within a scope, you are localizing that variable 
 and protecting it from unauthorized access and/or modification. 
 Indeed, the scope rules provide the foundation for encapsulation.
+
 Scopes can be nested. For example, each time you create a block of code, you are creating a new,
 nested scope. When this occurs, the outer scope encloses the inner scope. This means that objects
 declared in the outer scope will be visible to code within the inner scope. However, the reverse is
 not true. Objects declared within the inner scope will not be visible outside it.
+
 Here is another important point to remember: variables are created when their scope is entered,
 and destroyed when their scope is left. This means that a variable will not hold its value once it has
 gone out of scope. Therefore, variables declared within a method will not hold their values between
 calls to that method. Also, a variable declared within a block will lose its value when the block is
 left. Thus, the lifetime of a variable is confined to its scope.
+
 If a variable declaration includes an initializer, that variable will be reinitialized each time the
 block in which it is declared is entered. 
+    public static void main(String[] args) {
+        int x;
+        for(x = 0; x < 3; x++) {
+            int y = -1; //y is initialized each time block is entered
+            System.out.println("y is: " + y);
+            y = 100;
+            System.out.println("y is now: " + y);
+        }
+    }
+
+As you can see, y is always reinitialized to -1 each time the inner for loop is entered.
+Even though is it susequently assigned the value 100, this value is lost.
+
 There is one quirk to Java’s scope rules that may surprise you: although blocks can be nested, no
 variable declared within an inner scope can have the same name as a variable declared by an
 enclosing scope. For example, the following program, which tries to declare two separate variables
 with the same name, will not compile
 public class NestVar {
+//This program attempts to declare a variable in an inner scope with same name
+// as one defined in an outer scope
+
     public static void main(String[] args) throws InterruptedException {
         int count;
 
@@ -705,17 +728,104 @@ public class NestVar {
 
     }
 }
-
+Operators
  An operator is a symbol that tells the compiler to perform
 a specific mathematical or logical manipulation. Java has four general classes of operators:
-arithmetic, bitwise, relational, and logical
+arithmetic, bitwise, relational, and logical.
+Arithmetic OPerators
+Operator	Meaning
++		Addition (also unary plus)
+-		Subtraction(also unary minus)
+*		Multiplication
+/		Division
+%		Modulus
+++		Increment
+--		Decrement
+The operators +,-,*, and / all work the same way in Java as the do in algebra.
+These can be applied to any built-in numeric data type.
+They can also be used on an object of type char.
+Remember taht when / is applied to an integer, any remainder will be truncated;
+for example, 10/3 will equal 3 in integer division.
+10 % 3 = 1
+10.0 % 3.0 = 1.0
+The % yields a remainder of 1 for both integer and floating-point operations.
+
+Incremant and Decrement
+The increment operator adds 1 to its operand, and the decrement operator subtracts 1. Therefore,
+x = x + 1;
+is the same as
+x++;
+and
+x = x - 1;
+is the same as
+x--;
+Both the increment and decrement operators can either precede (prefix) or follow (postfix) the operand.
+For example,
+x = x + 1;
+can be written as
+++x; //prefix form
+or as
+x++; //posfix form
+In the foregoing example, there is no difference whether the increment is applied as a prefix or a postfix.
+However, when an increment or decrement is used as part of a larger expression, there is an important differnce.
+When an increment or decrement operator precedes its operand, Java will perform the corresponding operation prior to obtaining the opernd's value for use by the rest of the expression. If the operator follows its operand, Java will obtain the operands value before incrementing or decrementing it. Consider the following:
+
+x = 10;
+y = ++x;
+
+In this case, y will be set to 11. However, if the code is written as
+
+x = 10;
+y = x++;
+
+then y will be set to 10. 
+In both cases, x is still set to 11; the difference is when it happens.
+
+Relational and Logical Operators
+In the terms relational operator and logical operator, relational refers to the relationships that values can have with one another, and logical refers to the way in which true and false values can be connected together.
+The outcome of the relational and logical operators is a boolean value. 
+
+Short-Circuit Logical Operators
 Java supplies special short-circuit versions of its AND and OR logical operators that can be used to
 produce more efficient code. To understand why, consider the following. In an AND operation, if the
 first operand is false, the outcome is false no matter what value the second operand has. In an OR
 operation, if the first operand is true, the outcome of the operation is true no matter what the value of
 the second operand. Thus, in these two cases there is no need to evaluate the second operand. By not
 evaluating the second operand, time is saved and more efficient code is produced.
+The short-circuit AND operator is &&, and the short-circuit OR operator is ||.
+Their normal counterparts are & and |.
+The only difference between the normal and short-circuit versions is that the normal operands will always evaluate each operand, but short-circuit versions will evaluate the second operand only when necessary.
+The formal specification for Java refers to the short-circuit operators as the conditional-or and the conditional-and operators.
 
+The assignment operator
+The assignment operator is the single equal sign, =.
+var = esxpression;
+Here, the type of var must be compatible with the type of expression.
+Asignment operator allows you to create a chain of assignments:
+int x, y, z;
+
+x = y = z = 100;
+This works because the + is an operator that yields the value of the right-hand expression.
+Thus, the value of z = 100 is 100, which is the assigned to y, which in turn is assigned to x..
+
+Shorthand assignment
+a += 10
+var operator = expression;
+
+Type conversion in assignments
+In programming, it is common to assign one type of variable to another. 
+For example, you might want to assign an int value to a float variable, as shown here:
+
+int i;
+float f;
+
+i = 10;
+f = i; // assign an int to a float
+
+WHen compatible types are mixed in an assignment, the value of the right side is automatically converted to the type of the left side.
+Thus, in the preceding fragment, the value in i is converted into a float and then assigned to f.
+However, because of Java's strict type checking, not all types are compatible, and thus, not all type conversions are implicitly allowed.
+For example, boolean and int are not compatible.
 
 When one type of data is assigned to another type of variable, an automatic type conversion will
 take place if
@@ -724,6 +834,7 @@ take place if
 When these two conditions are met, a widening conversion takes place. For example, the int type is
 always large enough to hold all valid byte values, and both int and byte are integer types, so an
 automatic conversion from byte to int can be applied.
+For widening conversions, the numeric types, including integer and floating-point types, are compatible with each other
 There are no automatic conversions from the numeric types to char or boolean. Also, char and
 boolean are not compatible with each other. However, an integer literal can be assigned to char.
 Although the automatic type conversions are helpful, they will not fulfill all programming needs
