@@ -22,7 +22,7 @@ public class CastDemo {
         b = (byte) i; //no loss of info here. A byte can hold the value 100.
         System.out.println("Value of b: " + b);
 
-        i = 257;
+        i = 258;
         b = (byte) i; //information loss this time. A byte cannot hold the value 257;
         System.out.println("Value of b: " + b);
 

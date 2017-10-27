@@ -318,63 +318,7 @@ float	32 bits	3.40282347 x 1038, 1.40239846 x 10-45
 double	64 bits	1.7976931348623157 x 10308, 4.9406564584124654 x 10-324
 
 In the IEEE 754 floating-point number standard the finite, nonzero values are of the form s · m · 2e. For words of length 32 bits s is 0 (for positive) or 1 (for negative), m is a positive integer less that 224, and e is between -127 and 128, inclusive. For words of length 64 bits s is 0 (for positive) or 1 (for negative), m is a positive integer less that 253, and e is between -1023 and 1024, inclusive.
-COnversions:Widening and Narrowing
 
-to		from
-		
-		byte	short	char	int	long	float	double
-
-byte		id	  -	  - 	 -	 -	  -	  -
-short           +	  id	  -	 -       -        -       -
-char		-	  - 	  id	 - 	 -	  -	  -
-int		+	  +	  +	 id	 -	  -	  -
-long		+	  +	  +	 +	 id	  -	  -
-float		+	  +	  +	 +	 +	  id	  -
-double		+	  +	  +	 +	 +	  +	  id
-
-
-
-Widenings
-
-to		from
-
-		byte		short			char			int	long	float
-		-128...127	-32 768...32 767	\u0000...\uFFFF		-1	-1	1.2
-
-short		-128...127	[id]			-			 -	 -	 -
-int		-128...127*	-32,768...32,767*       0...65,535+		id	 -	 -
-long		-128...127*	-32,768...32,767*	0...65,535+		-1	 id	 -
-float		-128.0...127.0	-32,768.0...32,767.0	0...65,535.0		-1.0p	 -1.0p	 id
-double		-128.0...127.0	-32,768.0...32,767.0	0...65,535.0		-1.0	 -1.0p	 1.2
-* sign extend (two's complement)
-
-+ zero fill
-
-p IEEE round-to-nearest integer, possible loss of precision
-With the exception of boolean, any primitive type can be converted to any other. But there might be significant loss of data. Those conversions that may lose data are called narrowing are must be explicited demanded by the programmer using a cast. The following table suggests how these conversions are performed.
-
-Of course, the programmer must be aware of the finite limits of the arithemetic data types regardless of which one is chosen. There are no byte and short operations so all these values are promoted first to int. When stored back in byte and short variables the programmer must use a cast (a narrowing) and prepare for possible loss of data.
-
-The conversion causing the most trouble is the char to short conversion. Since they are both 16 bits it is tempting to convert chars to shorts to do arithmetic. But a twos-complement 16-bit number is both positive and negative and asymetric on top of that. Whereas the char type is most naturally considered a simple enumeration beginning with zero. In all cases the int type, not the short type is the one to choose for manipulating the bits of characters. These applies to those cases involving byte IO of text data; there is no unsigned data in Java. The data type byte is not unsigned; it supports a small range of positive and negative numbers.
-
-Narrowings
-to		from
-
-		byte			short				char			int 		long		float	double
-		-128..-1,0,1,..127	-32,768..-1,0,1,..32767		\u0000..\uFFFF		-1,0,1		-1,0,1		1.2	7.89
-
-byte		id			0..-1,0,1..-1			0..-1			-1,0,1d		-1,0,1d		(int)	(int)	
-short					id				0..-1			-1,0,1d		-1,0,1d		(int)	(int)
-char		\uFF80..\uFFFF,\u0000,	\u8000..\uFFFF,\u0000,		id			\uFFFF,\u0000,	\uFFFF,\u0000	(int)	(int)
-		\u0001,..\u007F		\u0001..\u7FFF						\u0001		\u0001
-int		+			+				+			id		-1,0,1		1r	7r
-long		+			+				+			+		id		1r	7r
-float		+			+				+			+		+		id	7.89r
-double		+			+				+			+		+		+	id
-
-d discard all but n lowest order bits
-
-r IEEE round-to-nearest
 __________________________________________________________________________________________________________________________________________________________________________________________________
 Integers
 Java defines four integer types: byte, short, int, and long
@@ -831,47 +775,136 @@ When one type of data is assigned to another type of variable, an automatic type
 take place if
 -The two types are compatible.
 -The destination type is larger than the source type.
-When these two conditions are met, a widening conversion takes place. For example, the int type is
-always large enough to hold all valid byte values, and both int and byte are integer types, so an
-automatic conversion from byte to int can be applied.
-For widening conversions, the numeric types, including integer and floating-point types, are compatible with each other
-There are no automatic conversions from the numeric types to char or boolean. Also, char and
-boolean are not compatible with each other. However, an integer literal can be assigned to char.
-Although the automatic type conversions are helpful, they will not fulfill all programming needs
-because they apply only to widening conversions between compatible types. For all other cases you
-must employ a cast. A cast is an instruction to the compiler to convert one type into another. Thus, it
-requests an explicit type conversion. A cast has this general form:
+When these two conditions are met, a widening conversion takes place. 
+For example, the int type is always large enough to hold all valid byte values, and both int and byte are integer types, so an automatic conversion from byte to int can be applied.
+For widening conversions, the numeric types, including integer and floating-point types, are compatible with each other.
+There are no automatic conversions from the numeric types to char or boolean. 
+Also, char and boolean are not compatible with each other. 
+However, an integer literal can be assigned to char(16 bits unsigned).
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+COnversions:Widening and Narrowing
+
+to		from
+		
+		byte	short	char	int	long	float	double
+
+byte		id	  -	  - 	 -	 -	  -	  -
+short           +	  id	  -	 -       -        -       -
+char		-	  - 	  id	 - 	 -	  -	  -
+int		+	  +	  +	 id	 -	  -	  -
+long		+	  +	  +	 +	 id	  -	  -
+float		+	  +	  +	 +	 +	  id	  -
+double		+	  +	  +	 +	 +	  +	  id
+
+
+
+Widenings
+
+to		from
+
+		byte		short			char			int	long	float
+		-128...127	-32 768...32 767	\u0000...\uFFFF		-1	-1	1.2
+________________________________________________________________________________________________________
+short		-128...127	[id]			-			 -	 -	 -
+int		-128...127*	-32,768...32,767*       0...65,535+		id	 -	 -
+long		-128...127*	-32,768...32,767*	0...65,535+		-1	 id	 -
+float		-128.0...127.0	-32,768.0...32,767.0	0...65,535.0		-1.0p	 -1.0p	 id
+double		-128.0...127.0	-32,768.0...32,767.0	0...65,535.0		-1.0	 -1.0p	 1.2
+* sign extend (two's complement)
+
++ zero fill
+
+p IEEE round-to-nearest integer, possible loss of precision
+With the exception of boolean, any primitive type can be converted to any other. But there might be significant loss of data. Those conversions that may lose data are called narrowing are must be explicited demanded by the programmer using a cast. The following table suggests how these conversions are performed.
+
+Of course, the programmer must be aware of the finite limits of the arithemetic data types regardless of which one is chosen. There are no byte and short operations so all these values are promoted first to int. When stored back in byte and short variables the programmer must use a cast (a narrowing) and prepare for possible loss of data.
+
+The conversion causing the most trouble is the char to short conversion. Since they are both 16 bits it is tempting to convert chars to shorts to do arithmetic. But a twos-complement 16-bit number is both positive and negative and asymetric on top of that. Whereas the char type is most naturally considered a simple enumeration beginning with zero. In all cases the int type, not the short type is the one to choose for manipulating the bits of characters. These applies to those cases involving byte IO of text data; there is no unsigned data in Java. The data type byte is not unsigned; it supports a small range of positive and negative numbers.
+
+Narrowings
+to		from
+
+		byte			short				char			int 		long		float	double
+		-128..-1,0,1,..127	-32,768..-1,0,1,..32767		\u0000..\uFFFF		-1,0,1		-1,0,1		1.2	7.89
+
+byte		id			0..-1,0,1..-1			0..-1			-1,0,1d		-1,0,1d		(int)	(int)	
+short					id				0..-1			-1,0,1d		-1,0,1d		(int)	(int)
+char		\uFF80..\uFFFF,\u0000,	\u8000..\uFFFF,\u0000,		id			\uFFFF,\u0000,	\uFFFF,\u0000	(int)	(int)
+		\u0001,..\u007F		\u0001..\u7FFF						\u0001		\u0001
+int		+			+				+			id		-1,0,1		1r	7r
+long		+			+				+			+		id		1r	7r
+float		+			+				+			+		+		id	7.89r
+double		+			+				+			+		+		+	id
+
+d discard all but n lowest order bits
+
+r IEEE round-to-nearest
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Casting Incompatible types
+Although the automatic type conversions are helpful, they will not fulfill all programming needs because they apply only to widening conversions between compatible types. 
+For all other cases you must employ a cast. 
+A cast is an instruction to the compiler to convert one type into another. 
+Thus, it requests an explicit type conversion. A cast has this general form:
 (target-type) expression
-When a cast involves a narrowing conversion, information might be lost. For example, when
-casting a long into a short, information will be lost if the long’s value is greater than the range of a
-short because its high-order bits are removed. When a floating-point value is cast to an integer type,
-the fractional component will also be lost due to truncation. For example, if the value 1.23 is assigned
-to an integer, the resulting value will simply be 1. The 0.23 is lost.
+Here, target-type specifies the desired type to convert the specified expression to.
+For example, if you want to convert the type of the expression x/y to int, you can write
+
+double x,y;
+//...
+(int) (x / y);
+Here, even though x and y are of type double, the cast converts the outcome of the expression to int.
+The parantheses surrounding x / y are necessary.
+otherwise, the cast to int would apply only to the x and not to the outcome of the division. 
+The cast is necessary here because there is no automatic conversion from double to int.
+
+When a cast involves a narrowing conversion, information might be lost. 
+For example, when casting a long into a short, information will be lost if the long’s value is greater than the range of a short because its high-order bits are removed.
+When a floating-point value is cast to an integer type, the fractional component will also be lost due to truncation. 
+For example, if the value 1.23 is assigned to an integer, the resulting value will simply be 1. The 0.23 is lost.
+
+public class CastDemo {
+    public static void main(String[] args) {
+        double x, y;
+        byte b;
+        int i;
+        char ch;
+
+        x = 10.0;
+        y = 3.0;
+
+        i = (int) (x / y); //cast double to int
+        System.out.println("integer outcome of x/y: " + i);
+
+        i = 100;
+        b = (byte) i; //no loss of info here. A byte can hold the value 100.
+        System.out.println("Value of b: " + b);
+
+        i = 257;
+        b = (byte) i; //information loss this time. A byte cannot hold the value 257;
+        System.out.println("Value of b: " + b);
+
+        b = 88; //ascii code for X
+        ch = (char) b;
+        System.out.println("ch: " + ch);
+    }
+}
 
 
-Operators, variables, and literals are constituents of expressions. 
-Within an expression, it is possible to mix two or more different types of data as long as they are
-compatible with each other. For example, you can mix short and long within an expression because
-they are both numeric types. When different types of data are mixed within an expression, they are all
-converted to the same type. This is accomplished through the use of Java’s type promotion rules.
-First, all char, byte, and short values are promoted to int. Then, if one operand is a long, the
-whole expression is promoted to long. If one operand is a float operand, the entire expression is
-promoted to float. If any of the operands is double, the result is double.
-It is important to understand that type promotions apply only to the values operated upon when an
-expression is evaluated. For example, if the value of a byte variable is promoted to int inside an
-expression, outside the expression, the variable is still a byte. Type promotion only affects the
-evaluation of an expression.
-Type promotion can, however, lead to somewhat unexpected results. For example, when an
-arithmetic operation involves two byte values, the following sequence occurs: First, the byte
-operands are promoted to int. Then the operation takes place, yielding an int result. Thus, the
-outcome of an operation involving two byte values will be an int. This is not what you might
-intuitively expect.
+The output
+Integer outcome of x / y: 3
+Value of b: 100
+Value of b: 1
+ch: X
 
-char ch1 = 'a', ch2 = 'b';
-ch1 = (char) (ch1 + ch2);
- Without the cast, the result of adding ch1 to ch2 would be int, which can’t be assigned to a char.
+In the program, the cast of (x/y) to int results in the truncation of the fractional component, and information is lost.
+Next, no loss of information occurs when b is assigned the value 100 because a byte can hold tha value 100.
+However, when the attempt is made to assign b the value 257, information loss occurs bcs 257 exceeds a byte's maximum value (255).
+Finally, no information is lost, but a cast is needed when asigning a byte value to char.
 
+Operator precedence
 Operator Precedence
+table shows the order of precedence for all Java operators, from highest to lowest
+
 ++(postfix)	--(postfix)
 ++(prefix)	--(prefix)	~	!	+(unary)	-(unary)	(type-cast)
 *		/		%
@@ -889,6 +922,56 @@ Operator Precedence
 =		op=
 
 
+Expressions
+ 
+Within an expression, it is possible to mix two or more different types of data as long as they are compatible with each other. 
+For example, you can mix short and long within an expression because they are both numeric types. 
+When different types of data are mixed within an expression, they are all converted to the same type. 
+This is accomplished through the use of Java’s type promotion rules.
+First, all char, byte, and short values are promoted to int. 
+Then, if one operand is a long, the whole expression is promoted to long. 
+If one operand is a float operand, the entire expression is promoted to float. 
+If any of the operands is double, the result is double.
+It is important to understand that type promotions apply only to the values operated upon when an expression is evaluated. 
+For example, if the value of a byte variable is promoted to int inside an expression, outside the expression, the variable is still a byte. 
+Type promotion only affects the evaluation of an expression.
+Type promotion can, however, lead to somewhat unexpected results. 
+For example, when an arithmetic operation involves two byte values, the following sequence occurs:
+First, the byte operands are promoted to int. 
+Then the operation takes place, yielding an int result. 
+Thus, the outcome of an operation involving two byte values will be an int. 
+This is not what you might intuitively expect.
+
+public class PromDemo {
+    public static void main(String[] args) {
+        byte b;
+        int i;
+
+        b = 10;
+        i = b * b; //No cast needed because result is already evaluated to int
+
+        b = 10;
+        b = (byte) (b * b); //Cast is needed here to assign an int to a byte
+
+        System.out.println("i and b: " + i + " " + b);
+
+    }
+}
+Somewhat counterintuitevly, no cast is needed when assigning b*b to i, because b is promoted to int when the expression is evaluated.
+However, when you try to assign b * b to b, you do need a cast - back t byte!
+Keep this in mind if you get unexpected type-incompatibility error messages on expressions that would otherwise seem perfectly OK.
+
+This same sort of situation also occurs when performing operations on chars.
+For example, in the following fragment, the cast back to char is needed because of the promotion of ch1 and ch2 to int within the expression:
+
+char ch1 = 'a', ch2 = 'b';
+ch1 = (char) (ch1 + ch2);
+ Without the cast, the result of adding ch1 to ch2 would be int, which can’t be assigned to a char.
+
+Spacing and Parantheses
+An expressions in Java may have tabs and spaces in it to make it more readable.
+
+Parantheses increase the precedence of the operations contained within them, just like in algebra.
 
 
 Chapter 2 Self Test
@@ -911,12 +994,11 @@ for (i = 0; i < 10; i++){
 	sum = sum + i;
 }
 System.out.println("Sum is: " + sum)
+
 sum variable is out of scope, available only inside inner block. Inside for-loop sum is not initialized
 There are to fundamental flaws in the fragment. First, sum is created each time the block defined by for loop is entered and destroyed on exit. 
 thus, it will not hold its value between iterations. Attempting to use sum to hold a running sum of the iterations is pointless.
-Second,
-sum will not be known outside of the block in which it is declared. Thus, the reference to it in
-the println( ) statement is invalid.
+Second, sum will not be known outside of the block in which it is declared. Thus, the reference to it in the println( ) statement is invalid.
 6. Explain the difference between the prefix and postfix forms of the increment operator.
 postfix will first use the value of variable and then increment it, prefix first increments and then uses variable
 When the increment operator preceeds its operand, Java will perform the increment prior to obtaining the operand's value
@@ -936,3 +1018,4 @@ A cast is needed when converting between incompatible types or when a narrowing 
 No
 12. Does a block define a scope
 Yes
+
