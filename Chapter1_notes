@@ -31,7 +31,7 @@ Furthermore, an applet is downloaded on demand, without further interaction with
 If the user clicks a link that contains an applet, the applet will be automatially downloaded and run in the browser.
 Applets are intended to be small programs.
 They are typically used to display data provided by the server, handle user input, or provide simple functions, such as a loan calculator, that execute locally, rather than on server.
-In essence, the applet allows some funecionality to be moved from the server to the client.
+In essence, the applet allows some functionality to be moved from the server to the client.
 The applet is a dynamic, self-executing program.
 
 Security

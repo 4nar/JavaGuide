@@ -1,0 +1,185 @@
+Chapter 4
+Introducing Classes, Objects, and Methods
+
+Key skills & Concepts
+-Know the fundamentals of the class
+
+-Understand how objects are created
+
+-Understand how reference variables are assigned
+
+-Create methods, return values, and use parameters
+
+-Use the return keyword
+
+-Return a value from a method
+
+-Add parameters to a method
+
+-Utilize constructors
+
+-Create parametrized constructors
+
+-Understand new
+
+-Understand garbage colection and finalizers
+
+-Use the this keyword
+
+Within a class are defined data and code that acts upon that data. 
+The code is contained in methods.
+
+Class Fundamentals
+A class is a template that defines the form of an object.
+It specifies both the data and the code that will operate in that data.
+Thus, a class is essentially a set of plans that specify how to built an object.
+A class is a logical abstraction.
+It is not until an object of that class has been created that a physical representation of that class exists in memory.
+Recall that the methods and variables that constitute a class are called members of the class.
+The data members are also referred to as instance variables.
+
+The general form of a Class
+When you define a class, you declare its exact form and nature.
+You do this by specifying the instance variables that it contains and the methods that operate on them.
+
+A class is created by using the keyword class.
+A simplified general form of a class definition is shown here:
+
+class classname {
+    //declare instance variable
+    type var1;
+    type var2;
+    //...
+    type varN;
+
+    //declare methods
+    type method1(parameters){
+        //body of method
+    }
+
+    //...
+    
+    type methodN(parameters){
+        //body of method
+    }
+}
+Although there is no syntatic rule that enforces it, a well-designed class should define one and only one logical entry.
+For example, a class that stores names and telephone numbers will not normally also store information about the stock market, average rainfall, sunspot cycles, or other unrelated information.
+The point here is that well-designed class groups logically connected information.
+A main() method is required only if that class is the starting point for your program.
+Also, some types of Java application, such as applets, don't require a main().
+
+Defining a class
+To illustrate classes, we will develop a class that encapsulates information about vehicles, such as cars, vans, and trucks.
+This class is called Vehicle, and it will store three items of information about a vehicle:
+the number of passengers that it can carry,
+its fuel capacity,
+and its average fuesl consumption (in miles per gallon).
+public class Vehicle {
+    int passengers; //number of passengers
+    int fuelcap; //fuel capacity in gallons
+    int mpg; //fuel consumption in miles per gallon
+}
+
+A class definition creates a new data type.
+In this case, the new data type is called Vehicle.
+You will use this name to declare objects of type Vehicle.
+Remember that a class declaration (definition?) is only a type description; it does not create an actual object.
+Thus, the preceding code does not cause any objects of type Vehicle to come into existence.
+
+To actually create a Vehicle object, you will use a statement like the following:
+
+Vehicle minivan = new Vehicle(); //create a Vehicle object called minivan
+
+After this statement executes, minivan will be an instance of Vehicle.
+Thus, it will have "physical" reality.
+
+Each time you create an instance of a class, you are creating an object that contains its own copy of each instance variable defined by the class.
+Thus, every Vehicle object will contain its own copies of the instance variables passengers, fuelcap, and mpg.
+To access these variables, you will use the dot (.) operator.
+The dot operator links the name of an object with the name of a member.
+The general form of the dot operator is shown here:
+
+object.member
+
+For example, to assign the fuelcap variable of minivan the value 16, use the following statement:
+
+minivan.fuelcap = 16;
+
+In general, you can use the dot operator to access both instance variables and methods.
+
+Fundamental principle: each object has its own copies of the instance variables defined by its class.
+Thus, the contents of the variables in one object can differ from the contents of the variables in another.
+There is no connection between the two objects except for the fact that they are both objects of the same type.
+
+How Objects Are created
+The following line is used to declare an object of type Vehicle:
+
+Vehicle minivan = new Vehicle();
+
+This declaration performs two functions.
+First, it declares a variable called minivan of the class type Vehicle.
+This variable does not define an object.
+Instead, it is simply a variable that can refer to an object.
+Second, the declaration creates a physical copy of the object and assigns to minivan a reference to that object.
+This is done by using the new operator.
+
+The new operator dynamically allocates (that is, allocates at runtime) memory for an object and returns a reference to it.
+This reference is, more or less, the address in memory of the object allocated by new.
+This reference is then stored in a variable.
+Thus, in Java, all class objects mus be dynamically allocated.
+
+The two steps combined in the preceding statement can be rewritten like this to show each step individually:
+
+Vehicle minivan; // declare reference to object
+minivan = new Vehicle(); //allocate a Vehicle object
+
+The first line declares minivan as a reference to an object of type Vehicle.
+Thus, minivan is a variable that can refer to an object, but it is not an object itself.
+At this point, minivan does not refer to an object.
+The next line creates a new Vehicle object and assigns a reference to it to minivan.
+Now, minivan is linked with an object.
+
+Reference Variables and Assignments
+In an assignment operation, object reference variables act differently than do variables of a primitive type, such as int.
+When you assign one primitive-type variable to another, the situation is straightforward.
+The variable on the left receives a copy of the value of the variable on the right.
+When you assign one object reference variable to another, the situation is a bit more complicated because you are changing the object that the reference variable refers to.
+
+Vehicle car1 = new Vehicle();
+Vehicle car2 = car1;
+
+car1 and car2 will both refer to the same object.
+The assignment of car1 to car2 simply makes car2 refer to the same object as does car1.
+Thus, the object can be acted upon by either car1 or car2.
+For example, after the assignment
+
+car1.mpg = 26;
+
+executes, both of these println() statements
+
+sout(car1.mpg);
+sout(car2.mpg);
+
+display the same value: 26.
+
+Although car1 and car2 both refer to the same object, they are not linked in any other way.
+For example, a subsequent assignment to car2 simply changes the object to which car2 refers.
+For example:
+
+Vehicle car1 = new Vehicle();
+Vehicle car2 = car1;
+Vehicle car3 = new Vehicle()
+
+car2 = car3; //now car2 and car3 refer to the same object.
+
+After this sequence executes, car2 refers to the same object as car3. the object reffered to by car1 is unchanged.
+
+METHODS
+Instance variables and methods are constituents of classes.
+Methods are subroutines that manipulate the data defined by the class and, in many cases, provide access to that data.
+In most cases, other parts of your program will interact with a class through its methods.
+
+A method contains one or more statements.
+In well-written Java code, each method performs only one task.
+

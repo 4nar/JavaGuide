@@ -10,12 +10,7 @@ public class Ans5 {
 //            int sum;
 //            sum = sum + i;
 //        }
-//        System.out.println("Sum is: " + sum)
-    int i = 1;
-    int sum;
-        System.out.println(sum);
-    sum = sum + i;
-    System.out.println(sum);
+//        System.out.println("Sum is: " + sum);
 
     }
 }

@@ -1,8 +1,33 @@
 chapter 3
 Program Control Statements
+Key Skills & Concepts
+
+-Input characters from the keyboard
+
+-Know the complete form of the if statement
+
+-Use the switch statement
+
+-Know the complete form of the for loop
+
+-Use the while loop
+
+-Use the do-while loop
+
+-Use break to exit a loop
+
+-Use break as a form of goto
+
+-Apply continue
+
+-Nest loops 
+
+
 There are three categories of program control statements: selection statements, which include the if and the
 switch; iteration statements, which include the for, while, and do-while loops; and jump statements,
-which include break, continue, and return. 
+which include break, continue, and return.
+
+Input Characters from the Keyboard  
 To read a character from the keyboard, we will use System.in.read( ). System.in is the
 complement to System.out. It is the input object attached to the keyboard. The read( ) method waits
 until the user presses a key and then returns the result. The character is returned as an integer, so it
@@ -15,7 +40,7 @@ carriage return, line feed sequence is entered into the input stream. Furthermor
 left pending in the input buffer until you read them. Thus, for some applications, you may need to
 remove them (by reading them) before the next input operation. 
 
-the if statement
+The if statement
 if(condition) statement;
 else statement;
 where the targets of the if and else are single statements. The else clause is optional. The targets of
@@ -34,7 +59,7 @@ target of the else will be executed. At no time will both of them be executed. T
 expression controlling the if must produce a boolean result.
 Nested ifs
 A nested if is an if statement that is target of another if or else. The main thing to remember about nested ifs in Java is that an else statement
-always refers to the nearest if statement that is within the same blosk as the else and not already associated with an else.
+always refers to the nearest if statement that is within the same block as the else and not already associated with an else.
 
 if(i == 10) {
 	if(j < 20) a = b;
@@ -157,7 +182,7 @@ for(x=100; x > -100; x -= 5){
 An important point about for loops is that the conditional expression is always tested at the top of the loop. 
 This means that the code inside the loop may not be executed at all if the condition is false to begin with. Here is an example:
 
-for(count=10; coun2 < 5; count++)
+for(count=10; count < 5; count++)
     x += count; // this statement will not execute 
 This loop will never execute because its control variable, count, is greater than 5 when the loop is
 first entered. This makes the conditional expression, count < 5, false from the outset; thus, not even
@@ -455,7 +480,7 @@ public class Guess4 {
 As explained earlier, console input is line bufferd - you have to press ENTER before characters are sent.
 Pressing ENTER causes a carriage return and a line feed (newline) sequence to be generated.
 These characters are left pending in the input buffer.
-ALso, if you typed more than one key before pressing ENTER, they would still be in the input buffer.
+Also, if you typed more than one key before pressing ENTER, they would still be in the input buffer.
 This loop discards those characters by continuing to read input until the end of the line is reached.
 If they were not discarded, then those characters would also be sent to the program as guesses, which is not what is wanted.
 
@@ -482,7 +507,7 @@ public class BreakDemo {
 
 Although the for loop is designed to run from 0 to num (which in this case is 100), the break statement causes it to terminate early, when i squared is greater than or equal to num.
 
-The break statement can be used with any of Java's loops, including intemtionally infinite loops. 
+The break statement can be used with any of Java's loops, including intentionally infinite loops. 
 For example, the following program simply reads input until the user types the letter q:
 public class Break2 {
     public static void main(String[] args) throws java.io.IOException{
@@ -520,7 +545,7 @@ public class Break3 {
 }
 
 Here are two other points to remember about break.
-First, more than one break statement nay appear in a loop. However, be careful. Too many break statements have the tendency to destructure your code.
+First, more than one break statement may appear in a loop. However, be careful. Too many break statements have the tendency to destructure your code.
 Second, the break that terminates a switch statement affects only that switch statement and not any enclosing loops.
 
 USe break as form of goto
@@ -578,7 +603,7 @@ public class Break4 {
 
 When i is 1, the first if statement succeeds, causing a break to the end of the block of code defined by label one.
 This causes "After block one" to print.
-When i is 2m the second if succeeds, causing control to be transferred to the end of the block labeled by two.
+When i is 2, the second if succeeds, causing control to be transferred to the end of the block labeled by two.
 This causes the messages "After block two" and "And after block one" to be printed, in that order.
 When i is 3, the third if succeeds, and control is transferred to the end of the block labeled by three. Now, all three messages are displayed.
 
